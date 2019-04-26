@@ -59,6 +59,7 @@ function buildCatMenu(data) {
     data.forEach(cat => {
         const newA = document.createElement("a");
         newA.textContent = cat.name;
+
         newA.href = "?cat=" + cat.id;
         catnav.appendChild(newA);
     })
