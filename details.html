@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Band Details</h1>
+    <nav><a href="index.html">Back</a></nav>
+
+    <main id="details-main">
+        <article class="band">
+            <h3 class="title">Title</h3>
+            <img class="responsive" src="" alt="band">
+            <h3 class="genre">Music genre: </h3>
+            <h3 class="members"></h3>
+            <h3 class="fyear">Founded: </h3>
+            <h3 class="dyear">Disbanded: </h3>
+            <a href="" class="detail-btn">Details</a>
+            <p class="details"></p>
+        </article>
+    </main>
+
+    <script>
+        const baseLink = "http://mediakutka.com/srotas/wp-json/wp/v2/band/";
+        const URLprms = new URLSearchParams(window.location.search);
+
+        const bandID = URLprms.get("myBandID")
+
+        console.log(baseLink + bandID + "?_embed");
+
+        fetch(baseLink + bandID + "?_embed").then(e => e.json()).then(showBand);
+
+        function showBand(object) {
+
+            document.querySelector(".title").textContent = object.title.rendered;
+
+            document.querySelector("h3.members").textContent = "Members: " + object.members;
+
+            document.querySelector("h3.genre").textContent = "Music Genre: " + object.music_genre;
+            document.querySelector("h3.fyear").textContent = "Founded: " + object.founded;
+            if (object.disbanded=="0") {
+                document.querySelector("h3.dyear").classList.add("hide");
+            } else {
+                document.querySelector("h3.dyear").textContent = "Disbanded: " + object.disbanded;
+                console.log("yes");
+            }
+            document.querySelector("img").src = object._embedded["wp:featuredmedia"]['0'].source_url;
+            document.querySelector(".details").textContent = object.content.rendered;
+        }
+
+    </script>
+</body>
+
+</html>
