@@ -50,7 +50,7 @@
                 console.log("yes");
             }
             document.querySelector("img").src = object._embedded["wp:featuredmedia"]['0'].source_url;
-            document.querySelector(".details").textContent = object.content.rendered;
+            document.querySelector(".details").innerHTML = object.content.rendered;
         }
 
     </script>
